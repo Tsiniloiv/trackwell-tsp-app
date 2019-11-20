@@ -1,5 +1,19 @@
 import React from 'react';
 
+/*
+  Each part of the route, from one point to another, is described as a vector. We take 
+  the vector information and use it to render a line between the two points.
+
+  head: the destination point of the vector
+  tail: the origin point of the vector
+  vector: the actual (x,y) information of the vector, derived from subtracting the head and tail vectors.
+  origin: The point used to determine the vector's offset for the actual render. By preferring the 
+          point with the lower magnitude, we mitigate (but, unfortunately, do not completely solve)
+          the problem of vectors being placed with their heads where their tails should be.
+  magnitude: The length of the vector, used to determine the width of the div used to render it.
+  angle: The vector's angle, applied as a transform to rotate the final div.
+*/
+
 export default class Vector extends React.Component {
   constructor(props) {
     super(props)

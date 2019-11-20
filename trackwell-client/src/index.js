@@ -4,11 +4,11 @@ import Point from './Components/TravelPoint.js';
 import TravelRoute from './Components/TravelRoute.js';
 import './index.css';
 
-class Game extends React.Component {
+class Grid extends React.Component {
   constructor() {
     super()
     this.state = {
-      solution: {bestState: [1, 2, 3,4,5,6,7,8,9], bestFitness: '0'},
+      solution: {bestState: [], bestFitness: '0'},
       travelPoints: [
         {x: 279.900000, y: 162.300000},
         {x: 163.400000, y: 307.200000},
@@ -82,17 +82,25 @@ class Game extends React.Component {
     xhr.send()
   }
 
+  /*
+    Renders the points on the route as 0 wide, 0 tall divs with a circular border, offset by the point's (x,y) coordinates.
+  */
   renderPoints() {
     return this.state.travelPoints.map(point => {
       return(<Point x={point.x} y={point.y}/>)
     })
   }
 
+  /*
+    Renders the routes between each point. Each route is described as a vector, applying its angle and magnitude
+    as transforms for a simple 2px tall div.
+  */
   renderVectors() {
     let vectors = []
     for (const [i, v] of this.state.solution.bestState.entries()) {
       let indexOfNextPoint = i+1;
       if(indexOfNextPoint > this.state.solution.bestState.length - 1) {
+        //The route is a loop, so when we hit the end, we connect back to the beginning.
         indexOfNextPoint = 0;
       }
       vectors.push(<TravelRoute key={i} tail={this.state.travelPoints[v]} head={this.state.travelPoints[this.state.solution.bestState[indexOfNextPoint]]}/>)
@@ -117,6 +125,6 @@ class Game extends React.Component {
 // ========================================
 
 ReactDOM.render(
-  <Game />,
+  <Grid />,
   document.getElementById('root')
 );

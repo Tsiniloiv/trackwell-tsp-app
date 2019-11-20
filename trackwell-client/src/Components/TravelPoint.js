@@ -1,5 +1,9 @@
 import React from 'react';
 
+/*
+  The points on the route. Modifying the props by +/-5 so that the center of the 'point' matches the point's exact coordinates.
+*/
+
 export default class Point extends React.Component {
   constructor(props) {
     super(props)
